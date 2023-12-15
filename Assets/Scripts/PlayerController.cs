@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 10f;
     private bool isGrounded;
-    private bool host;
+    private bool host=false;
 
     private void Awake()
     {

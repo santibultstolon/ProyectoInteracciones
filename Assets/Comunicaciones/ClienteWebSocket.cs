@@ -13,6 +13,8 @@ public class ClienteWebSocket : MonoBehaviour
     [SerializeField]
     public Mensaje misDatos = new Mensaje();
 
+    public GameObject ola;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,23 +26,31 @@ public class ClienteWebSocket : MonoBehaviour
     #region SetId
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        int idDatos = JsonUtility.FromJson<int>(e.Data);
-        misDatos.id = int.Parse(e.Data);
+        misDatos.id = JsonUtility.FromJson<int>(e.Data);
+        Debug.Log(misDatos.id);
+        Instantiate(ola, new Vector3(0, 0, 0), transform.rotation);
     }
     #endregion
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            ws.Connect();
-        }
-    }
-
-    public void Right() { 
             if (ws.IsAlive)
             {
-            misDatos.direction = new Vector2(1, 0);
-                ws.Send(JsonUtility.ToJson(misDatos));            
+                misDatos.direction = new Vector2(1, 0);
+                ws.Send(JsonUtility.ToJson(misDatos));
             }
+        }
+    }
+    public void Right() {
+        if (ws.IsAlive)
+        {
+            misDatos.direction = new Vector2(1, 0);
+            ws.Send(JsonUtility.ToJson(misDatos));
+        }
+    }
+    public void ConnectToServer()
+    {
+        ws.Connect();
     }
 }

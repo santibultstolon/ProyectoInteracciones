@@ -10,28 +10,32 @@ public class ObjetoServidor : MonoBehaviour
     WebSocketSharp.Server.WebSocketServer wss;
 
     public GameObject[] players;
-
-    // Start is called before the first frame update
-    void Start()
+    public GameObject player;
+    GameManager manager;
+    private void Awake()
     {
-        
+        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // iniciar el servidor (a mano, para que solo haya uno)
-            wss = new WebSocketServer(8080);
-            wss.Start();
-            wss.AddWebSocketService<ServidorWebSocket>("/");
-            Debug.Log("servidor iniciado...");
-        }
-    }
 
-    public void SpawnPlayer(int id)
+    public void SpawnPlayer()
     {
-        GameObject newPlayer = Instantiate(players[id]);
+        Debug.Log("Spawneando");
+        manager.PlayerSpawn();
+        Debug.Log("Spawneando2");
+    }
+    public void StartServer()
+    {
+        wss = new WebSocketServer(8080);
+        wss.Start();
+        wss.AddWebSocketService<ServidorWebSocket>("/");
+        Debug.Log("servidor iniciado...");
+        ServidorWebSocket.server = gameObject.GetComponent<ObjetoServidor>();
+        Debug.Log("servidor añadidoiniciado...");
+
+    }
+    void Spawnn()
+    {
+        player.SetActive(false);
     }
 }
