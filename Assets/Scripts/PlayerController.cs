@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce = 10f;
     private bool isGrounded;
     private bool host=false;
+    public bool canMove;
+    public Vector2 directione;
 
     private void Awake()
     {
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckGrounded();
+
     }
 
     private void FixedUpdate()
@@ -44,6 +47,14 @@ public class PlayerController : MonoBehaviour
         if (host)
         {
             Move();
+        }
+        if (directione.x == 0)
+        {
+            canMove = false;
+        }
+        if (canMove)
+        {
+            MovePlayer(directione);
         }
 
 

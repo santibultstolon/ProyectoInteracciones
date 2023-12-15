@@ -39,7 +39,7 @@ public class Clientepruebas : MonoBehaviour
     {
         if (ws.IsAlive)
         {
-            misDatos.direction = new Vector2(1, 0);
+            misDatos.direction =1;
             ws.Send(JsonUtility.ToJson(misDatos));
         }
     }

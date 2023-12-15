@@ -17,6 +17,6 @@ public class GameManager : MonoBehaviour
 
     public void PlayerSpawn()
     {
-        player.SetActive(false);
+        player.SetActive(false);  
     }
 }

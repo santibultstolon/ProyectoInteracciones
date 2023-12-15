@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using WebSocketSharp.Server;
 
@@ -9,19 +10,20 @@ public class ObjetoServidor : MonoBehaviour
 
     WebSocketSharp.Server.WebSocketServer wss;
 
-    public GameObject[] players;
-    public GameObject player;
+    public PlayerController[] players;
+    public PlayerController player;
     GameManager manager;
+    public int counts;
     private void Awake()
     {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        Debug.Log(player.gameObject.name);
     }
 
 
     public void SpawnPlayer()
     {
         Debug.Log("Spawneando");
-        manager.PlayerSpawn();
         Debug.Log("Spawneando2");
     }
     public void StartServer()
@@ -34,8 +36,17 @@ public class ObjetoServidor : MonoBehaviour
         Debug.Log("servidor añadidoiniciado...");
 
     }
-    void Spawnn()
+    public void MoveRightPlayers(int id,float direction)
     {
-        player.SetActive(false);
+        Debug.Log("derecha");
+        if (direction != 0)
+        {
+            player.canMove = true;
+        }
+        else
+        {
+            player.canMove = false;
+        }
+        player.directione= new Vector2(direction,0);
     }
 }
