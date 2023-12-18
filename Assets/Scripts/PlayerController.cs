@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool host=false;
     public bool canMove;
-    public Vector2 directione;
+    public float directione;
 
     private void Awake()
     {
@@ -48,10 +48,11 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-        if (directione.x == 0)
+        if (directione == 0)
         {
             canMove = false;
         }
+
         if (canMove)
         {
             MovePlayer(directione);
@@ -59,9 +60,10 @@ public class PlayerController : MonoBehaviour
 
 
     }
-    public void MovePlayer(Vector2 direction)
+    public void MovePlayer(float direction)
     {
-        transform.Translate(direction);
+        Debug.Log(direction);
+        transform.Translate(new Vector2(directione,0));
     }
 
     private void Move()

@@ -21,7 +21,7 @@ public class Methods: MonoBehaviour
         }
     }
     // Método estático
-    public void MovePlayer(int id, Vector2 direction)
+    public void MovePlayer(int id, int direction)
     {
         for(int i = 0; i < players.Count; i++) {
             if(id == players[i].id)

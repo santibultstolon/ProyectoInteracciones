@@ -15,10 +15,15 @@ public class ClienteWebSocket : MonoBehaviour
     [SerializeField]
     public Mensaje misDatos = new Mensaje();
     public string ipPport;
-    public TMP_InputField inputIP;
-    public GameObject IPSession,waitingForHost,gamePad;
-    bool hasWaited;
+    public TMP_InputField inputIP,inputUsername;
+    public GameObject IPSession,waitingForHost,gamePad,exit1;
     public GameObject ola;
+    public string username;
+    public int id;
+    public int contadorMensajes=0;
+    public bool canStart;
+    Quaternion rotacion = Quaternion.identity;
+
     //127.0.0.1:8080
     // Start is called before the first frame update
     void Start()
@@ -29,9 +34,20 @@ public class ClienteWebSocket : MonoBehaviour
     #region SetId
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        misDatos.id = JsonUtility.FromJson<int>(e.Data);
-        Debug.Log(misDatos.id);
-        Instantiate(ola, new Vector3(0, 0, 0), transform.rotation);
+        Debug.Log("HA LLEGADOOOOOO");
+        //Debug.Log(JsonUtility.FromJson<int>(e.Data));
+        //Debug.Log(e.Data);
+        if(contadorMensajes == 0)
+        {
+            id = int.Parse(e.Data);
+            misDatos.id= id;
+            contadorMensajes++;
+        }
+        if (e.Data == "Empieza")
+        {
+            canStart= true;
+        }
+       
     }
     #endregion
     private void Update()
@@ -45,13 +61,15 @@ public class ClienteWebSocket : MonoBehaviour
             }
         }
         ipPport = inputIP.text;
-        if (hasWaited)
+       // username = inputUsername.text;
+        if (canStart)
         {
-            waitingForHost.SetActive(true);
+            waitingForHost.SetActive(false);
             gamePad.SetActive(true);
-            hasWaited = false;
-
+            exit1.SetActive(false);
+            canStart = false;
         }
+        
     }
     public void Right() {
         if (ws.IsAlive)
@@ -74,6 +92,7 @@ public class ClienteWebSocket : MonoBehaviour
         ws.Connect();
         IPSession.SetActive(false);
         waitingForHost.SetActive(true);
+        exit1.SetActive(true);
         ipPport= "";
 
     }
@@ -88,6 +107,7 @@ public class ClienteWebSocket : MonoBehaviour
     public void ExitIP()
     {
         gamePad.SetActive(false);
+        waitingForHost.SetActive(false);
         IPSession.SetActive(true);
         ws.Close();
     }

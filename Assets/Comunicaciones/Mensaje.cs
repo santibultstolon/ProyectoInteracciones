@@ -6,5 +6,6 @@ public class Mensaje
 {
     public int id;
     public float direction;
+    public string username;
 
 }
