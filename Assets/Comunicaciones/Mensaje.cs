@@ -5,7 +5,7 @@ using UnityEngine;
 public class Mensaje
 {
     public int id;
-    public float direction;
-    public string username;
+    public string direction;
+    public bool jump;
 
 }

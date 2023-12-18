@@ -26,7 +26,7 @@ public class Methods: MonoBehaviour
         for(int i = 0; i < players.Count; i++) {
             if(id == players[i].id)
             {
-                players[i].MovePlayer(direction);
+                //players[i].MovePlayer(direction);
                 break;
             }  
         }

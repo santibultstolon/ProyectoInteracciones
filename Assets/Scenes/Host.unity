@@ -313,8 +313,8 @@ GameObject:
   - component: {fileID: 350318353}
   - component: {fileID: 350318352}
   - component: {fileID: 350318355}
-  m_Layer: 0
-  m_Name: Square
+  m_Layer: 3
+  m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,10 +445,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mmkbo:
-  - {fileID: 2893544168009377105}
-  - {fileID: 2893544169353505946}
-  - {fileID: 2893544168330373462}
-  - {fileID: 2893544168709431475}
+  - {fileID: 7260028018181296081}
+  - {fileID: 7260028016841557530}
+  - {fileID: 7260028017864491990}
+  - {fileID: 7260028017506404915}
+  connect: 0
 --- !u!1 &449656331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,10 +1188,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players:
   - {fileID: 7260028018181296081}
+  - {fileID: 2893544168009377105}
   - {fileID: 2893544169353505946}
   - {fileID: 2893544168330373462}
   - {fileID: 2893544168709431475}
-  - {fileID: 2893544168009377105}
   mmkbo:
   - {fileID: 2893544168009377105}
   - {fileID: 2893544168330373462}
@@ -1537,9 +1538,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 5
+  isGrounded: 0
+  distance: 0.57
   canMove: 0
-  directione: 0
+  rightV: {x: 1, y: 0}
+  leftV: {x: -1, y: 0}
+  derecha: 0
+  izquierda: 0
+  messages: 
+  jump: 0
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &2893544168330373462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1554,9 +1565,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 5
+  isGrounded: 0
+  distance: 0.57
   canMove: 0
-  directione: 0
+  rightV: {x: 0.1, y: 0}
+  leftV: {x: -0.1, y: 0}
+  derecha: 0
+  izquierda: 0
+  messages: 
+  jump: 0
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &2893544168709431475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1571,9 +1592,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 5
+  isGrounded: 0
+  distance: 0.57
   canMove: 0
-  directione: 0
+  rightV: {x: 0.1, y: 0}
+  leftV: {x: -0.1, y: 0}
+  derecha: 0
+  izquierda: 0
+  messages: 
+  jump: 0
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &2893544169353505946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,9 +1619,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   moveSpeed: 5
-  jumpForce: 10
+  jumpForce: 5
+  isGrounded: 0
+  distance: 0.57
   canMove: 0
-  directione: 0
+  rightV: {x: 0.1, y: 0}
+  leftV: {x: -0.1, y: 0}
+  derecha: 0
+  izquierda: 0
+  messages: 
+  jump: 0
+  floor:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!61 &5834688779529794999
 BoxCollider2D:
   m_ObjectHideFlags: 0

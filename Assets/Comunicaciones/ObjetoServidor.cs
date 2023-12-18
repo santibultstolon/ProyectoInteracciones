@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using WebSocketSharp.Server;
 using WebSocketSharp;
-
+using UnityEditor;
 
 public class ObjetoServidor : MonoBehaviour
 {
@@ -44,7 +44,7 @@ public class ObjetoServidor : MonoBehaviour
         }
         if (empezarJuego)
         {
-            StartCoroutine("StartGame");
+            StartGame();
             empezarJuego = false;
         }
     }
@@ -67,20 +67,36 @@ public class ObjetoServidor : MonoBehaviour
         startButton.SetActive(true);
 
     }
-    public void MoveRightPlayers(int id,float direction)
+    public void MoveRightPlayers(int id,string direction,bool jump)
     {
-        if (direction != 0)
+        /* if (direction =="derecha")
+         {
+             players[id].derecha = true;
+         }
+         else if(direction=="izquierda")
+         {
+             players[id].izquierda = true;
+         }    
+
+         if (direction =="nothing")
+         {
+             players[id].derecha = false;
+             players[id].izquierda = false;
+         }
+         */
+        for(int i=0;i<players.Length;i++)
         {
-            players[id-1].canMove = true;
+            if (id == players[i].id) {
+                players[i].messages = direction;
+                players[i].jump = jump;
+                
+            }
         }
-        else
-        {
-            players[id - 1].canMove = false;
-        }
-        players[id - 1].directione = direction;
+
+        
     }
 
-    public IEnumerator StartGame()
+    public void StartGame()
     {
         //Por si se bugeara, revisa que la lista de jugadores esté vacía, si no lo está, lo borra todo.
         /* if (players[0] != null)
@@ -103,7 +119,7 @@ public class ObjetoServidor : MonoBehaviour
         estate = estado.playing;
         floor.SetActive(true);
         server.MandarMensaje();
-        yield return new WaitForSeconds(0.5f);
+        
 
 
     }

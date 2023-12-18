@@ -56,7 +56,7 @@ public class ClienteWebSocket : MonoBehaviour
         {
             if (ws.IsAlive)
             {
-                misDatos.direction = 1;
+               // misDatos.direction.x = 1;
                 ws.Send(JsonUtility.ToJson(misDatos));
             }
         }
@@ -74,14 +74,30 @@ public class ClienteWebSocket : MonoBehaviour
     public void Right() {
         if (ws.IsAlive)
         {
-            misDatos.direction = 0.1f;
+            misDatos.direction = "derecha";
             ws.Send(JsonUtility.ToJson(misDatos));
         }
     }  
     public void Left() {
         if (ws.IsAlive)
         {
-            misDatos.direction = -0.1f;
+            misDatos.direction = "izquierda";
+            ws.Send(JsonUtility.ToJson(misDatos));
+        }
+    }
+    public void Jump()
+    {
+        if (ws.IsAlive)
+        {
+            misDatos.jump = true;
+            ws.Send(JsonUtility.ToJson(misDatos));
+        }
+    }
+    public void NoJump()
+    {
+        if (ws.IsAlive)
+        {
+            misDatos.jump = false;
             ws.Send(JsonUtility.ToJson(misDatos));
         }
     }
@@ -100,7 +116,7 @@ public class ClienteWebSocket : MonoBehaviour
     {
         if (ws.IsAlive)
         {
-            misDatos.direction = 0;
+            misDatos.direction="nothing";
             ws.Send(JsonUtility.ToJson(misDatos));
         }
     }

@@ -13,10 +13,16 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 10f;
-    private bool isGrounded;
+    public bool isGrounded;
+    public float distance;
     private bool host=false;
     public bool canMove;
-    public float directione;
+    public Vector2 rightV = new Vector2(0.1f, 0);
+        public Vector2 leftV = new Vector2(-0.1f,0);
+    public bool derecha, izquierda;
+    public string messages;
+    public bool jump;
+    public LayerMask floor;
 
     private void Awake()
     {
@@ -38,8 +44,30 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CheckGrounded();
+          CheckGrounded();
 
+        Debug.Log("Se esta ejecutando");
+
+        switch (messages)
+        {
+            case "derecha":
+                Debug.Log("Derecha");
+                rb.velocity = rightV;
+                break;
+            case "izquierda":
+                Debug.Log("Izquierda");
+                rb.velocity = leftV;
+                break;
+            case "nothing":
+                Debug.Log("Res");
+                rb.velocity = Vector2.zero;
+                break;
+        }
+        if (jump&&isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -48,22 +76,7 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-        if (directione == 0)
-        {
-            canMove = false;
-        }
-
-        if (canMove)
-        {
-            MovePlayer(directione);
-        }
-
-
-    }
-    public void MovePlayer(float direction)
-    {
-        Debug.Log(direction);
-        transform.Translate(new Vector2(directione,0));
+      // MovePlayer(directione);
     }
 
     private void Move()
@@ -74,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGrounded()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, distance,floor);
         isGrounded = hit.collider != null;
     }
 }

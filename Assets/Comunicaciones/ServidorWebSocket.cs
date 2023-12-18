@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using WebSocketSharp;
@@ -20,6 +21,7 @@ public class ServidorWebSocket : WebSocketBehavior
         Debug.Log("++ Alguien se ha conectado. "+Sessions.Count);
         server.connectedPlayers = Sessions.Count;
         Send(clientIdCounter.ToString());
+
         Debug.Log("Enviado");
 
         //Methods.SpawnPlayer(clientIdCounter);
@@ -42,11 +44,18 @@ public class ServidorWebSocket : WebSocketBehavior
             Sessions.Broadcast("Empieza");
         }
         Mensaje message = JsonUtility.FromJson<Mensaje>(e.Data);
-       int id = message.id;
-        float direction = message.direction;
+        string direcc = message.direction;
+        bool jump = message.jump;
+      /*  if (direcc == "derecha")
+        {
 
+        }  
+        if (direcc == "izquierda")
+        {
 
-        server.MoveRightPlayers(id, direction);
+        }*/
+        int id = message.id;
+        server.MoveRightPlayers(id, direcc,jump);
 
         //Methods.MovePlayer(id, direction);
     }
