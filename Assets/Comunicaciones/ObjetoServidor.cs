@@ -6,6 +6,7 @@ using UnityEngine;
 using WebSocketSharp.Server;
 using WebSocketSharp;
 using UnityEditor;
+using System.Xml;
 
 public class ObjetoServidor : MonoBehaviour
 {
@@ -84,7 +85,7 @@ public class ObjetoServidor : MonoBehaviour
              players[id].izquierda = false;
          }
          */
-        for(int i=0;i<players.Length;i++)
+        for(int i=1;i<players.Length;i++)
         {
             if (id == players[i].id) {
                 players[i].messages = direction;
@@ -127,4 +128,10 @@ public class ObjetoServidor : MonoBehaviour
     {
         empezarJuego = true;
     }
+    private void OnDestroy()
+    {
+        wss.Stop();
+    }
+
+
 }

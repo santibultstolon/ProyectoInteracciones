@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using WebSocketSharp;
 using TMPro;
+using System.Linq.Expressions;
+using System;
 
 public class ClienteWebSocket : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class ClienteWebSocket : MonoBehaviour
     public int contadorMensajes=0;
     public bool canStart;
     Quaternion rotacion = Quaternion.identity;
+    public TextMeshProUGUI error;
 
     //127.0.0.1:8080
     // Start is called before the first frame update
@@ -34,7 +37,6 @@ public class ClienteWebSocket : MonoBehaviour
     #region SetId
     private void Ws_OnMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log("HA LLEGADOOOOOO");
         //Debug.Log(JsonUtility.FromJson<int>(e.Data));
         //Debug.Log(e.Data);
         if(contadorMensajes == 0)

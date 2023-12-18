@@ -8,7 +8,7 @@ using WebSocketSharp.Server;
 
 public class ServidorWebSocket : WebSocketBehavior
 {
-    private static int clientIdCounter = 0;
+    private static int clientIdCounter = 1;
     public static ObjetoServidor server;
     public static bool lanzarMensaje;
 
