@@ -17,6 +17,7 @@ public class Playerooo : MonoBehaviour
     private bool isGrounded;
     private bool canJump = true;
     public bool isCarryingBall = false;
+    public float radiuss;
 
     void Start()
     {
@@ -26,7 +27,7 @@ public class Playerooo : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, radiuss, groundLayer);
 
         float horizontalInput = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(horizontalInput * speed, rb.velocity.y);

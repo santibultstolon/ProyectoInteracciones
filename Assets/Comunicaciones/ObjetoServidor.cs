@@ -7,6 +7,9 @@ using WebSocketSharp.Server;
 using WebSocketSharp;
 using UnityEditor;
 using System.Xml;
+using System.Net.Sockets;
+using System.Net;
+using UnityEngine.SceneManagement;
 
 public class ObjetoServidor : MonoBehaviour
 {
@@ -22,15 +25,18 @@ public class ObjetoServidor : MonoBehaviour
     estado estate = estado.lobby;
     public GameObject hostLobby;
    public int connectedPlayers;
-    public TextMeshProUGUI connectedText;
+    public TextMeshProUGUI connectedText,IPText;
     public ServidorWebSocket server;
     public GameObject startButton, connectButton,floor;
     bool empezarJuego;
+    public GameObject gameplayUI;
     
     
     private void Awake()
     {
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        string localIPAddress = GetLocalIPAddress();
+        IPText.text ="Your IP Address is: "+ localIPAddress+":8080";
     }
     private void Update()
     {
@@ -48,14 +54,14 @@ public class ObjetoServidor : MonoBehaviour
             StartGame();
             empezarJuego = false;
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            wss.Stop();
+            SceneManager.LoadScene("Host");
+        }
     }
 
-
-    public void SpawnPlayer()
-    {
-        Debug.Log("Spawneando");
-        Debug.Log("Spawneando2");
-    }
     public void StartServer()
     {
         wss = new WebSocketServer(8080);
@@ -112,14 +118,10 @@ public class ObjetoServidor : MonoBehaviour
         {
             players[i] = foundPlayers[i];
         }*/
-        for(int i = 1; i < connectedPlayers; i++)
-        {
-            Debug.Log("Se ha activado");
-           // mmkbo[i].gameObject.SetActive(true);
-        }
         estate = estado.playing;
         floor.SetActive(true);
         server.MandarMensaje();
+        gameplayUI.SetActive(true);
         
 
 
@@ -130,8 +132,34 @@ public class ObjetoServidor : MonoBehaviour
     }
     private void OnDestroy()
     {
-        wss.Stop();
+      //  wss.Stop();
     }
 
+    string GetLocalIPAddress()
+    {
+        string localIP = "127.0.0.1";
+
+        try
+        {
+            // Obtiene todas las direcciones IP asociadas con la máquina
+            IPAddress[] localIPAddresses = Dns.GetHostAddresses(Dns.GetHostName());
+
+            // Busca la primera dirección IPv4 válida
+            foreach (IPAddress ipAddress in localIPAddresses)
+            {
+                if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    localIP = ipAddress.ToString();
+                    break;
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error al obtener la dirección IP local: " + e.Message);
+        }
+
+        return localIP;
+    }
 
 }

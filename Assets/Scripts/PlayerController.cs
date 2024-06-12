@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,20 +19,24 @@ public class PlayerController : MonoBehaviour
     public float distance;
     public bool host;
     public bool canMove;
-    public Vector2 rightV = new Vector2(0.1f, 0);
-        public Vector2 leftV = new Vector2(-0.1f,0);
+    public Vector2 rightV;
+    public Vector2 leftV;
     public bool derecha, izquierda;
     public string messages;
     public bool jump;
     public LayerMask floor;
     Animator anim;
-    bool hasBall;
-    GameObject ball,ballRoot;
+   public bool hasBall;
+    public GameObject ball,ballRoot;
     int valorDerecha = 1;
+    public int points;
+    bool canJump;
+    public TextMeshProUGUI pointsText;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        
     }
 
     private void OnMove(InputValue value)
@@ -51,8 +56,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
           CheckGrounded();
-
-        Debug.Log("Se esta ejecutando");
+        pointsText.text = "x" + points.ToString();
 
         switch (messages)
         {
@@ -73,36 +77,30 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(0, rb.velocity.y);
                 break;
         }
-
-        
-    }
-
-    private void FixedUpdate()
-    {
-        if (host)
-        {
-            Move();
-        }
-        if (jump && isGrounded)
+        if (jump && isGrounded&&canJump)
         {
             if (!hasBall)
             {
                 rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
             }
-            else if (hasBall)
+            if (hasBall)
             {
                 ball.transform.SetParent(null);
-                ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(3*valorDerecha, 3));
+                ball.GetComponent<CircleCollider2D>().enabled = true;
+                ball.AddComponent<Rigidbody2D>();
+                ball.GetComponent<Rigidbody2D>().AddForce(new Vector2(200 * valorDerecha, 200));
+                hasBall = false;
+                canJump = false;
             }
-           
-        }
-        // MovePlayer(directione);
-    }
+            
 
-    private void Move()
-    {
-        Vector2 movement = moveInput * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        }
+        if (!jump)
+        {
+            canJump = true;
+        }
+
+
     }
 
     private void CheckGrounded()
@@ -123,6 +121,8 @@ public class PlayerController : MonoBehaviour
             collision.gameObject.transform.SetParent(transform);
             hasBall = true;
             ball = collision.gameObject;
+            ball.GetComponent<CircleCollider2D>().enabled = false;
+            Destroy(ball.GetComponent<Rigidbody2D>());
 
 
         }

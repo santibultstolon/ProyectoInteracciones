@@ -61,10 +61,8 @@ public class ServidorWebSocket : WebSocketBehavior
     }
     public void MandarMensaje()
     {
-        Debug.Log("He mandado tu puto mensaje");
         Sessions.Broadcast("Empieza");
         lanzarMensaje = false;
-        Debug.Log("He mandado tu puto mensaje");
     }
 
 
